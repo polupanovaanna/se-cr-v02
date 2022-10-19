@@ -64,6 +64,29 @@ class GameRound:
         assert number >= 0 and number <= 36
         results = [x.is_matching_number(number) for x in self.players]
         return RoundResult(results, number)
+
+
+def get_random_game_result(players: List[Rate]) -> RoundResult:
+    class Randomizer:
+        lst: List[int]
+        def __init__(self) -> None:
+            self.lst = [i for i in range(37)]
+        def get_number(self) -> int:
+            return random.choice(self.lst)
+    return GameRound(players, Randomizer()).get_round_result()
+
+def convert_string_to_rate(str_rate: str) -> Rate:
+    tokens = str_rate.split()
+    if tokens[0] == "VoisinsDeZero":
+        return Rate(RateType.VoisinsDeZero, None)
+    if tokens[0] == "Orphelins":
+        return Rate(RateType.Orphelins, None)
+    if tokens[0] == "Tier":
+        return Rate(RateType.Tier, None)
+    if tokens[0] == "Parity":
+        return Rate(RateType.Parity, int(tokens[1]))
+    if tokens[0] == "Color":
+        return Rate(RateType.Color, tokens[1])
     
         
 

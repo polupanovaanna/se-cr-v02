@@ -108,9 +108,21 @@ class GameRoundTests(TestCase):
                 self.lst += [22,18, 29, 7, 28, 12, 35, 3, 26]
             def get_number(self) -> int:
                 return random.choice(self.lst)
-            
+
         rates = [Rate(RateType.VoisinsDeZero, None)]
         for i in range(100):
             self.assertEqual(GameRound(rates, Randomizer()).get_round_result().is_winner, [True]) 
+
+class StrToRateTests(TestCase):
+
+    def test_to_str(self):
+        self.assertEqual(convert_string_to_rate("VoisinsDeZero"), Rate(RateType.VoisinsDeZero, None))
+        self.assertEqual(convert_string_to_rate("Tier"), Rate(RateType.Tier, None))
+        self.assertEqual(convert_string_to_rate("Orphelins"), Rate(RateType.Orphelins, None))
+        self.assertEqual(convert_string_to_rate("Parity 1"), Rate(RateType.Parity, 1))
+        self.assertEqual(convert_string_to_rate("Parity 0"), Rate(RateType.Parity, 0))
+        self.assertEqual(convert_string_to_rate("Color R"), Rate(RateType.Color, 'R'))
+        self.assertEqual(convert_string_to_rate("Color B"), Rate(RateType.Color, 'B'))
+        self.assertEqual(convert_string_to_rate("Color G"), Rate(RateType.Color, 'G'))
 
 unittest.main()
