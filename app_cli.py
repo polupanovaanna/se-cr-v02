@@ -34,4 +34,4 @@ for i, res in enumerate(results.is_winner):
     if results.is_winner[i]:
         print(" won the bet")
     else:
-        print(" lost a bet")
+        print(" lost the bet")
