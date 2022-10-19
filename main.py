@@ -1,8 +1,7 @@
 from typing import List, Any
 from enum import Enum
 from dataclasses import dataclass
-
-from soupsieve import select
+import random
 
 cnt_cells = 37
 cells = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22,18, 29, 7, 28, 12, 35, 3, 26]
@@ -40,3 +39,31 @@ class Rate:
                 return num_pos[round_result] % 2 == 0 and round_result != 0
             if self.value == 'G':
                 return round_result == 0 
+
+@dataclass
+class RoundResult:
+    is_winner: List[bool]
+    result_number: int
+
+@dataclass
+class DetermenisticRandomizer:
+    number_to_return: int
+
+    def get_number(self):
+        return self.number_to_return
+
+
+
+@dataclass
+class GameRound:
+    players: List[Rate]
+    randomizer: Any
+
+    def get_round_result(self):
+        number = self.randomizer.get_number()
+        assert number >= 0 and number <= 36
+        results = [x.is_matching_number(number) for x in self.players]
+        return RoundResult(results, number)
+    
+        
+

@@ -2,6 +2,7 @@ from unittest import TestCase
 import unittest
 from main import *
 
+
 class RateTests(TestCase):
 
     def test_matching_orphelins(self):
@@ -82,5 +83,34 @@ class RateTests(TestCase):
         self.assertFalse(rate.is_matching_number(1))
         self.assertFalse(rate.is_matching_number(2))
         self.assertFalse(rate.is_matching_number(3))
+
+class GameRoundTests(TestCase):
+    def test_1(self):
+        rates = [Rate(RateType.Orphelins, None), Rate(RateType.Color, 'G'), 
+                 Rate(RateType.Tier, None), Rate(RateType.Parity, 1), Rate(RateType.Parity, 0)]
+        results = GameRound(rates, DetermenisticRandomizer(0)).get_round_result()
+        self.assertListEqual(results.is_winner, [False, True, False, False, True])
+        self.assertEqual(results.result_number, 0)
+
+    def test_2(self):
+        rates = [Rate(RateType.Orphelins, None), Rate(RateType.Color, 'G'), 
+                 Rate(RateType.Tier, None), Rate(RateType.Parity, 1), 
+                 Rate(RateType.Parity, 0), Rate(RateType.Color, 'R'), Rate(RateType.Color, 'B')]
+        results = GameRound(rates, DetermenisticRandomizer(14)).get_round_result()
+        self.assertListEqual(results.is_winner, [True, False, False, False, True, True, False])
+        self.assertEqual(results.result_number, 14)
+
+    def test_3(self):
+        class Randomizer:
+            lst: List[int]
+            def __init__(self) -> None:
+                self.lst = [0, 32, 15, 19, 4, 21, 2, 25]
+                self.lst += [22,18, 29, 7, 28, 12, 35, 3, 26]
+            def get_number(self) -> int:
+                return random.choice(self.lst)
+            
+        rates = [Rate(RateType.VoisinsDeZero, None)]
+        for i in range(100):
+            self.assertEqual(GameRound(rates, Randomizer()).get_round_result().is_winner, [True]) 
 
 unittest.main()
