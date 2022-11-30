@@ -22,28 +22,29 @@ def get_rate():
         if str in possible_rates:
             return str
 
-diler_rate_str = None
-while True:
-    name = input("Print new player name:").strip()
-    if name == "No new players":
-        break
-    if name == "Diler":
-        if diler_rate_str is not None:
-            print("Diler is already in the game")
+if __name__ == "__main__":
+    diler_rate_str = None
+    while True:
+        name = input("Print new player name:").strip()
+        if name == "No new players":
+            break
+        if name == "Diler":
+            if diler_rate_str is not None:
+                print("Diler is already in the game")
+                continue
+            diler_rate_str = random.choice(possible_rates)
+            print("Diler rate is " + diler_rate_str)
             continue
-        diler_rate_str = random.choice(possible_rates)
-        print("Diler rate is " + diler_rate_str)
-        continue
-    add_player(name, get_rate())
+        add_player(name, get_rate())
 
-if diler_rate_str is not None:
-    add_player("Diler", diler_rate_str)
-results = get_random_game_result([p.rate for p in players])
-print(f"\n\n\nThe number on the roulette wheel is {results.result_number}")
+    if diler_rate_str is not None:
+        add_player("Diler", diler_rate_str)
+    results = get_random_game_result([p.rate for p in players])
+    print(f"\n\n\nThe number on the roulette wheel is {results.result_number}")
 
-for i, res in enumerate(results.is_winner):
-    print(players[i].name, end='')
-    if results.is_winner[i]:
-        print(" won the bet")
-    else:
-        print(" lost the bet")
+    for i, res in enumerate(results.is_winner):
+        print(players[i].name, end='')
+        if results.is_winner[i]:
+            print(" won the bet")
+        else:
+            print(" lost the bet")
