@@ -5,10 +5,10 @@ import random
 
 cnt_cells = 37
 cells = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22,18, 29, 7, 28, 12, 35, 3, 26]
+# cells -- list of cells order on the casino wheel
 num_pos = [0] * cnt_cells
 for i in range(cnt_cells):
     num_pos[cells[i]] = i
-
 
 class RateType(Enum):
     VoisinsDeZero = 0
@@ -21,6 +21,9 @@ class RateType(Enum):
 class Rate:
     rtype: RateType
     value: Any
+    """
+        Check if given round result (i.e. number of cell on the wheel) is in given Rate 
+    """
 
     def is_matching_number(self, round_result: int) -> bool:
         if self.rtype == RateType.VoisinsDeZero:
@@ -42,11 +45,11 @@ class Rate:
 
 @dataclass
 class RoundResult:
-    is_winner: List[bool]
-    result_number: int
+    is_winner: List[bool] # True if player#n won his rate
+    result_number: int # number on the wheel
 
 @dataclass
-class DetermenisticRandomizer:
+class DetermenisticRandomizer: #Just for tests
     number_to_return: int
 
     def get_number(self):
@@ -67,6 +70,9 @@ class GameRound:
 
 
 def get_random_game_result(players: List[Rate]) -> RoundResult:
+    """
+        Immitate casino game, choose random cell and return game result for each player
+    """
     class Randomizer:
         lst: List[int]
         def __init__(self) -> None:
@@ -76,6 +82,9 @@ def get_random_game_result(players: List[Rate]) -> RoundResult:
     return GameRound(players, Randomizer()).get_round_result()
 
 def convert_string_to_rate(str_rate: str) -> Rate:
+    """
+        converts string to rate, necessary for parsing from cli
+    """
     tokens = str_rate.split()
     if tokens[0] == "VoisinsDeZero":
         return Rate(RateType.VoisinsDeZero, None)
