@@ -1,7 +1,10 @@
 ## Casino
 
+![Alt text](photo.jpg?raw=true "casino")
+
 1. [cli-launch](#cli-launch)
-2. [documentation](#documentation)
+2. [gui-launch](#gui-launch)
+3. [documentation](#documentation)
 
 ## cli-launch
 Берете такие хопа и `python3 app_cli.py`, и вот у вас запустилось казино 
@@ -11,6 +14,12 @@
 Если хотите играть с диллером, то просто в какой-то момент вводите имя диллер (он сам себе выберет ставку). В конце надо ввести `No new players`, игра закончится, выведется число выпавшее 
 на колесе и кто выйграл/проиграл ставку. Вот красочный пример, показывающий всю суть игры в казино:
 ![Alt text](example.jpg?raw=true "Good Game")
+
+## gui-launch
+Достаточно запустить непосредственно файл `app_gui.py` с помощью команды `python3 app_gui.py`. После этого весь 
+функционал приложения будет доступен через графический интерфейс
+
+![Alt text](example2.png?raw=true "Good Game")
 
 ## documentation
 Если вдруг вам захотелось использовать невероятно удобный интерфейс для создания нового казино, 

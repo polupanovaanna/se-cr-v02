@@ -26,7 +26,7 @@ while True:
     elif event == 'Add diler':
         app_cli.add_player(values['-DILER_NAME-'], random.choice(app_cli.possible_rates))
         playerlist = app_cli.get_player_list()
-        window['-OUTPUT-'].update(values['-DILER_NAME-'])
+        window['-OUTPUT-'].update(playerlist)
     elif event == 'Start game':
         window['-RESULTS-'].update(app_cli.get_results())
     elif event == 'New game':
