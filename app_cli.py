@@ -7,6 +7,15 @@ rate_list = []
 names = []
 dilet_rate = None
 
+def get_rate():
+    str = input("Print new player rate:").strip()
+    if str in possible_rates:
+        return str
+    while True:
+        str = input("Print RIGHT new player rate:").strip()
+        if str in possible_rates:
+            return str
+
 while True:
     name = input("Print new player name:").strip()
     if name == "No new players":
@@ -19,7 +28,7 @@ while True:
         print("Diler rate is " + diler_rate_str)
         dilet_rate = convert_string_to_rate(diler_rate_str)
         continue
-    s = input("Print new player rate:").strip()
+    s = get_rate()
     rate_list.append(convert_string_to_rate(s))
     names.append(name)
 
